@@ -1,0 +1,64 @@
+Revision history for Perl extension Sledge::Plugin::Validator
+
+0.10  Thu Mar 25 16:16:59 2004
+	- メールアドレスのチェックを最低限の正規表現ですることにした。
+	  携帯のメールアドレス、ウザー。
+
+0.09  Tue Feb 17 18:00:28 2004
+    - [Bug Fix] is_DATE の閏年のチェックが間違っていた。
+	   誤: 100 の倍数で 4で割れれば OK
+	   正: 100の倍数のときは400で割れる年､100の倍数でないときは4で割り切れる
+	   (Thanks to Hiroyuki Kobayashi)
+
+0.08  Tue Jul 15 17:05:39 2003
+    - [Bug Fix] mod_perl上でエラーが出る時がある、バグを修正。
+    * sub DESTROY {} を明示的に書いた。
+
+0.07  Thu Jul 10 21:22:38 2003
+    - [Bug Fix] 詳細なエラー(is_error('q1', 'NOT_NULL'))をテンプレート
+	  で定義していると、エラーがなくても is_error('q1') がエラーになる。
+    * エラーの判断を値が定義されているかだけではなく、KEYの数も見るようにした。
+	  (is_error)
+
+    - [Bug Fix] 実在しているキーを Alias に設定すると上手くAliasでの判断が
+	  できなくなるバグを修正。
+    * Alias と実際のキーの判断の優先順位を逆転させた。(is_error)
+
+0.06  Tue Jul  1 12:33:18 2003
+	- [new Valid Function] 自分で正規表現を書ける REGEX を追加。
+
+	- [EMAIL change] EMAIL は EMAIL_LOOSE と同じにした。
+	* 0.05 までの EMAIL は EMAIL_STRICT という名前で呼べるようにした。
+
+	- [Bug Fix] dispatch を書いているクラス以外で、このプラグインを
+	  use して継承してvalid を使っているとエラーが発生しても、 dispatch が
+	  実行されてしまうバグを修正。
+	* エラー時は output_content() を呼ぶようにした。
+	* 上記変更により、エラー時は AFTER_DISPATCH が実行されない点に注意。
+	  http://lists.sourceforge.jp/pipermail/sledge-users/2003-May/000120.html
+
+	- [Bug Fix] 詳細なエラーの属性を is_error でをとろうとしたとき、
+	  aliasをつかっているとエラーにならない。
+
+	- [Document Bug Fix] スペース、全角スペースは基本的にエラーとなる。
+    - [Document Bug Fix] FROM -> FORM (Thanks to Hiroshi Sakuramoto)
+
+0.05  Fri May 16 11:56:56 2003
+	- ドキュメントの整備。
+
+0.04  Tue May 06 17:53:20 2003
+	- コードやインターフェイスを見直し。（下位互換無し、注意のこと）
+	- 文字の正規化の処理を廃止。
+	* 今後は Sledge::Plugin::Regularize で同様のよりができます。
+
+0.03 Tue Mar 18 06:43:31 2003
+	- [Bug Fix] is_error で alias で設定されている別名でエラーを
+	  とれないバグを修正。
+	- [Bug Fix] エラーでも post_dispatch を実行してしまうバグを修正。
+
+0.02 Mon Mar 10 14:33:49 2003
+	- validator() を廃止し、valid_xxxx() のように dispatch と同じように
+	  page ごとに定義できるようにした。
+
+0.01  Tue Mar 04 11:02:17 2003
+	- original version

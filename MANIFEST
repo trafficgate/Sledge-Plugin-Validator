@@ -1,0 +1,25 @@
+Changes
+MANIFEST			This list of files
+Makefile.PL
+README
+lib/Sledge/Plugin/Validator.pm
+lib/Sledge/Plugin/Validator/date.pm
+lib/Sledge/Plugin/Validator/default.pm
+lib/Sledge/Plugin/Validator/email.pm
+lib/Sledge/Plugin/Validator/email_loose.pm
+lib/Sledge/Plugin/Validator/email_strict.pm
+lib/Sledge/Plugin/Validator/email_super_loose.pm
+lib/Sledge/Plugin/Validator/japanese.pm
+t/00_compile.t
+t/01_default.t
+t/02_japanese.t
+t/03_email.t
+t/04_email_loose.t
+t/05_email_strict.t
+t/06_date.t
+t/07_email_super_loose
+t/foo.html
+t/foo_error.html
+t/lib/Mock/Valid/foo.pm
+t/lib/Sledge/TestPages.pm
+META.yml                                 Module meta-data (added by MakeMaker)

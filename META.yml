@@ -1,0 +1,15 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Sledge-Plugin-Validator
+version:      0.10
+version_from: lib/Sledge/Plugin/Validator.pm
+installdirs:  site
+requires:
+    Email::Valid:                  0
+    Email::Valid::Loose:           0
+    Jcode:                         0
+    Test::More:                    0.32
+    UNIVERSAL::require:            0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.17
