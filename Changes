@@ -1,5 +1,18 @@
 Revision history for Perl extension Sledge::Plugin::Validator
 
+0.11  Sun Apr 24 17:07:39 2005
+    - [Document Bug Fix] [% IF is.error %] -> [% valid.is_error %]
+	  (Thanks to MATSUNO, tokuhiro)
+
+	- email_super_loose のテストスクリプトがmake testで動いてなかった
+	  (多分)を修正しました。
+
+	- perl -wc で email_super_loose で warning が出ていたので修正しました。
+	  Sledge::Plugin::Validator::email_super_loose 0.02
+
+	- URLのチェックをしてくれるヤツを作ってみました。
+	  Sledge::Plugin::Validator::http_url 0.01
+
 0.10  Thu Mar 25 16:16:59 2004
 	- メールアドレスのチェックを最低限の正規表現ですることにした。
 	  携帯のメールアドレス、ウザー。

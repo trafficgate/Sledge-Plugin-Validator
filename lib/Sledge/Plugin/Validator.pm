@@ -2,7 +2,7 @@ package Sledge::Plugin::Validator;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 use Carp;
 use vars qw($AUTOLOAD);
@@ -367,7 +367,7 @@ Sledge::Plugin::Validator - FORM から入力されたパラメータチェック。
   # テンプレートでは以下のようにエラーの項目によって適宜メッセージを
   # 生成してください。
   #
-  [% IF is.error %]
+  [% IF valid.is_error %]
   入力エラーです。
   <ul>
       [% IF valid.is_error('login_id') %]
@@ -508,10 +508,9 @@ is_error メソッドで zip もエラーになります。
 
 =head1 BUGS
 
-何かバグや要望がありましたら、BTSに書きこむかメールで
-お問い合わせください。
+何かバグや要望がありましたら、メールでお問い合わせ
+ください。
 
-L<http://www.godtomato.net/works/bts/>
 
 =head1 AUTHOR
 

@@ -1,7 +1,7 @@
 package Sledge::Plugin::Validator::email_super_loose;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 sub load {
 	my $self = shift;
@@ -13,11 +13,12 @@ sub load {
 sub is_EMAIL_SUPER_LOOSE {
 	local $_ = shift;
 
+	my @email = split/\@/;
 	if (
-		/^[\x21-\x7E]+$/     and # 全部 ASCII
-		scalar(split/\@/) == 2 and # @ は1コだけ
-		/\@.+[\.].+$/        and # @ の後ろに . はひとつ以上
-		/\@[a-zA-Z0-9]/          # @ の直後は英数字
+		/^[\x21-\x7E]+$/    and # 全部 ASCII
+		scalar(@email) == 2 and # @ は1コだけ
+		/\@.+[\.].+$/       and # @ の後ろに . はひとつ以上
+		/\@[a-zA-Z0-9]/         # @ の直後は英数字
 	) {
 		return 1;
 	}
@@ -51,10 +52,13 @@ Sledge::Plugin::Validator::email_super_loose - 超簡単なメールアドレスのチェック
 「全部 ASCII、@ は1コだけ、@ の後ろに . はひとつ以上、@ の直後は英数字」
 というチェックのみを行います。
 
-実際、RFC準拠じゃないアドレスがわんさか存在してるのが事実、
-RFC準拠のアドレスでも間違って入力されている可能性がある。
+実際、RFC準拠じゃないアドレスがわんさか存在してるのが事実。
+(特に携帯電話だっ)
+本当に正しいメールアドレスが欲しければ、メールを送信してみるのが
+良いわけで。
 
-厳しいチェックに果たして意味があるのか?と思ったので作りました。
+その場合、厳しいチェックして使えるメールアドレスをはじく方が
+危険性が高いかなーとおもって、コレを作りました。
 
 =back
 

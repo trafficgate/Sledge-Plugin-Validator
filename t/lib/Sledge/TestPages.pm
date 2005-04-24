@@ -22,10 +22,10 @@ sub create_authorizer {
     return Sledge::Authorizer::Null->new($self);
 }
 
-sub create_manager {
-    my $self = shift;
-    return Sledge::SessionManager::Cookie->new($self);
-}
+#sub create_manager {
+#    my $self = shift;
+#    return Sledge::SessionManager::Cookie->new($self);
+#}
 
 sub create_charset {
     my $self = shift;
@@ -37,10 +37,10 @@ sub create_config {
     return Sledge::TestConfig->new($self);
 }
 
-sub create_session {
-    my $self = shift;
-    return Sledge::TestSession->new($self, @_);
-}
+#sub create_session {
+#    my $self = shift;
+#    return Sledge::TestSession->new($self, @_);
+#}
 
 sub dispatch {
     my $self = shift;
@@ -52,6 +52,14 @@ sub dispatch {
 }
 
 sub output { shift->{output} }
+
+# -------------------------------------------------------------------------
+# セッション無し
+#
+# -------------------------------------------------------------------------
+sub create_manager {}
+sub create_session {}
+sub construct_session {}
 
 package Sledge::TestConfig;
 use vars qw($AUTOLOAD);
