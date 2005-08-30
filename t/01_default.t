@@ -1,5 +1,5 @@
 use strict;
-use Test::More tests => 25;
+use Test::More tests => 27;
 
 use lib 't/lib';
 
@@ -9,6 +9,7 @@ my %TEST_PARAM = (
 	ok_not_sp            => 'TATA',
 	ok_int1              => '123',
 	ok_int2              => '-123',
+	ok_uint              => '123',
 	ok_ascii             => 'abc123&*(&@$@',
 	ok_length1           => '22',
 	ok_length2           => '12',
@@ -21,6 +22,7 @@ my %TEST_PARAM = (
 	ng_not_null          => '',
 	ng_not_sp            => 'KIMURA, takefumi',
 	ng_int               => '1234 ',
+	ng_uint              => '-123',
 	ng_ascii             => '£±£²£³',
 	ng_length1           => '1',
 	ng_length2           => '1',
@@ -55,6 +57,7 @@ sub valid_foo {
 		ok_not_sp            => [qw(NOT_SP)],
 		ok_int1              => [qw(INT)],
 		ok_int2              => [qw(INT)],
+		ok_uint              => [qw(UINT)],
 		ok_ascii             => [qw(ASCII)],
 		ok_length1           => [[qw(LENGTH 2)]],
 		ok_length2           => [[qw(LENGTH 2 4)]],
@@ -67,6 +70,7 @@ sub valid_foo {
 		ng_not_null          => [qw(NOT_NULL)],
 		ng_not_sp            => [qw(NOT_SP)],
 		ng_int               => [qw(INT)],
+		ng_uint              => [qw(UINT)],
 		ng_ascii             => [qw(ASCII)],
 		ng_length1           => [[qw(LENGTH 2)]],
 		ng_length2           => [[qw(LENGTH 2 4)]],

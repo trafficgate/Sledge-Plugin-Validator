@@ -1,5 +1,9 @@
 Revision history for Perl extension Sledge::Plugin::Validator
 
+0.12 Tue Aug 30 11:31:33 2005
+    - UINT(符号無しINT)を追加しました。
+	  Sledge::Plugin::Validator::default 0.03
+
 0.11  Sun Apr 24 17:07:39 2005
     - [Document Bug Fix] [% IF is.error %] -> [% valid.is_error %]
 	  (Thanks to MATSUNO, tokuhiro)

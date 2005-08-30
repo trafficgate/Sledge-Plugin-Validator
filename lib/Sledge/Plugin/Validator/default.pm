@@ -1,7 +1,7 @@
 package Sledge::Plugin::Validator::default;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 sub load {
 	my $self = shift;
@@ -10,6 +10,7 @@ sub load {
 		NOT_NULL        => \&is_NOT_NULL,
 		NOT_SP          => \&is_NOT_SP,
 		INT             => \&is_INT,
+		UINT            => \&is_UINT,
 		ASCII           => \&is_ASCII,
 		LENGTH          => \&is_LENGTH,
 		DUPLICATION     => \&is_DUPLICATION,
@@ -27,7 +28,11 @@ sub is_NOT_SP {
 }
 
 sub is_INT {
-	return ($_[0] =~ /^\-?[\d]+$/)? 1 : 0;
+	return ($_[0] =~ /^\-?\d+$/)? 1 : 0;
+}
+
+sub is_UINT {
+	return ($_[0] =~ /^\d+$/)? 1 : 0;
 }
 
 sub is_ASCII {
@@ -92,7 +97,13 @@ Sledge::Plugin::Validator::default - よく使う入力チェック
 
 数字であること
 
-  /^\-?[\d]+$/
+  /^\\d+$/
+
+=item UINT
+
+符号無し数字であること
+
+  /^\\d+$/
 
 =item ASCII
 
