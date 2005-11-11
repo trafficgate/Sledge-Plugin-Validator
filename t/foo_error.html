@@ -35,6 +35,16 @@ foo_error
 	[% IF valid.is_error('ng_duplication2') %]OK  ng_duplication2[% END %]
 	[% IF valid.is_error('ng_not_duplication1') %]OK  ng_not_duplication1[% END %]
 	[% IF valid.is_error('ng_not_duplication2') %]OK  ng_not_duplication2[% END %]
+
+	[% UNLESS valid.is_error('ok_decimal1') %]OK  ok_decimal1[% END %]
+	[% UNLESS valid.is_error('ok_decimal2') %]OK  ok_decimal2[% END %]
+	[% UNLESS valid.is_error('ok_decimal3') %]OK  ok_decimal3[% END %]
+	[% UNLESS valid.is_error('ok_udecimal1') %]OK  ok_udecimal1[% END %]
+	[% UNLESS valid.is_error('ok_udecimal2') %]OK  ok_udecimal2[% END %]
+	[% IF valid.is_error('ng_decimal1') %]OK  ng_decimal1[% END %]
+	[% IF valid.is_error('ng_decimal2') %]OK  ng_decimal2[% END %]
+	[% IF valid.is_error('ng_udecimal1') %]OK  ng_udecimal1[% END %]
+	[% IF valid.is_error('ng_udecimal2') %]OK  ng_udecimal2[% END %]
 [% END %]
 
 [% IF mail_test %]

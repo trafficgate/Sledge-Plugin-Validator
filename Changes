@@ -1,5 +1,11 @@
 Revision history for Perl extension Sledge::Plugin::Validator
 
+0.13 Fri Nov 11 15:43:53 2005
+	- DECIMAL, UDECIMAL(符号付き、無しの小数点チェック)を追加した。
+	  INT の変わりにも使えます。
+	  Sledge::Plugin::Validator::default 0.04
+	  (Thanks to FUSHIHARA, kan)
+
 0.12 Tue Aug 30 11:31:33 2005
     - UINT(符号無しINT)を追加しました。
 	  Sledge::Plugin::Validator::default 0.03

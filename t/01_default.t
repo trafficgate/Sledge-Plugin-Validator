@@ -1,5 +1,5 @@
 use strict;
-use Test::More tests => 27;
+use Test::More tests => 36;
 
 use lib 't/lib';
 
@@ -31,6 +31,16 @@ my %TEST_PARAM = (
 	ng_duplication2      => 'takefumi1@takefumi.com',
 	ng_not_duplication1  => 'takefumi',
 	ng_not_duplication2  => 'takefumi',
+
+	ok_decimal1          => '111.32',
+	ok_decimal2          => '222.4',
+	ok_decimal3          => '-333.45',
+	ok_udecimal1         => '123',
+	ok_udecimal2         => '123.456',
+	ng_decimal1          => '123',
+	ng_decimal2          => '123.4',
+	ng_udecimal1         => '-123',
+	ng_udecimal2         => '-123.456',
 );
 
 # -------------------------------------------------------------------------
@@ -79,6 +89,16 @@ sub valid_foo {
 		ng_duplication2      => [[qw(DUPLICATION ng_duplication1)]],
 		ng_not_duplication1  => [[qw(NOT_DUPLICATION ng_not_duplication2)]],
 		ng_not_duplication2  => [[qw(NOT_DUPLICATION ng_not_duplication1)]],
+
+		ok_decimal1          => [[qw(DECIMAL 3 2)]],
+		ok_decimal2          => [[qw(DECIMAL 3 2)]],
+		ok_decimal3          => [[qw(DECIMAL 3 3)]],
+		ok_udecimal1         => [[qw(UDECIMAL 4 4)]],
+		ok_udecimal2         => [[qw(UDECIMAL 3 3)]],
+		ng_decimal1          => [[qw(DECIMAL 2 4)]],
+		ng_decimal2          => [[qw(DECIMAL 2 4)]],
+		ng_udecimal1         => [[qw(UDECIMAL 2 3)]],
+		ng_udecimal2         => [[qw(UDECIMAL 4 2)]],
 	);
 
 	$self->tmpl->param(default_test => 1);

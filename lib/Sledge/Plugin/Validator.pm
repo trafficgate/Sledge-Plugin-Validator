@@ -2,7 +2,7 @@ package Sledge::Plugin::Validator;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 use Carp;
 use vars qw($AUTOLOAD);

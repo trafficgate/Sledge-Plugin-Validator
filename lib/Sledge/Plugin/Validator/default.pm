@@ -1,7 +1,7 @@
 package Sledge::Plugin::Validator::default;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 sub load {
 	my $self = shift;
@@ -11,6 +11,8 @@ sub load {
 		NOT_SP          => \&is_NOT_SP,
 		INT             => \&is_INT,
 		UINT            => \&is_UINT,
+		DECIMAL         => \&is_DECIMAL,
+		UDECIMAL        => \&is_UDECIMAL,
 		ASCII           => \&is_ASCII,
 		LENGTH          => \&is_LENGTH,
 		DUPLICATION     => \&is_DUPLICATION,
@@ -35,6 +37,35 @@ sub is_UINT {
 	return ($_[0] =~ /^\d+$/)? 1 : 0;
 }
 
+sub is_DECIMAL {
+    my $str    = shift;
+	my $max1   = shift;
+	my $max2   = shift;
+
+    if ($str =~ /^\-?(\d+)(?:\.(\d+))?$/) {
+        return 0 if ($max1 and length($1) > $max1);
+        return 0 if ($max2 and length($2) > $max2);
+		return 1;
+    } else {
+		return 0;
+    }
+}
+
+sub is_UDECIMAL {
+    my $str    = shift;
+	my $max1   = shift;
+	my $max2   = shift;
+
+
+    if ($str =~ /^(\d+)(?:\.(\d+))?$/) {
+        return 0 if ($max1 and length($1) > $max1);
+        return 0 if ($max2 and length($2) > $max2);
+		return 1;
+    } else {
+		return 0;
+    }
+}
+
 sub is_ASCII {
 	return ($_[0] =~ /^[\x21-\x7E]+$/)? 1 : 0;
 }
@@ -49,15 +80,15 @@ sub is_NOT_DUPLICATION {
 
 sub is_LENGTH {
 	my $length = length(shift);
-	my $min   = shift;
-	my $max   = shift || $min;
+	my $min    = shift;
+	my $max    = shift || $min;
 
 	return ($min <= $length and $length <= $max)? 1 : 0;
 }
 
 sub is_REGEX {
-    my $str = shift;
-    my $regex  = shift;
+    my $str   = shift;
+    my $regex = shift;
 
     return ($str =~ /$regex/)? 1 : 0;
 }
@@ -104,6 +135,17 @@ Sledge::Plugin::Validator::default - よく使う入力チェック
 符号無し数字であること
 
   /^\\d+$/
+
+=item DECIMAL
+
+小数点以下の長さチェック
+
+  # 整数部が2桁以下、小数部が4桁以下であること
+  ['DECIMAL', 2, 4]
+
+=item UDECIMAL
+
+DECIMALの符号無し。
 
 =item ASCII
 
