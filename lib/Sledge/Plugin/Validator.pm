@@ -2,7 +2,7 @@ package Sledge::Plugin::Validator;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.13';
+$VERSION = '0.14';
 
 use Carp;
 use vars qw($AUTOLOAD);
@@ -21,7 +21,10 @@ sub import {
 			my $self = shift;
 
 			my $page = $self->{page};
-			my $vali_page     = "valid_$page";
+			if ($self->can("post_dispatch_$page") and !$self->is_post_request) {
+				return;
+			}
+			my $vali_page = "valid_$page";
 			unless($self->can($vali_page)) {
 				return;
 			}
@@ -394,6 +397,8 @@ valid_page が起動されるタイミング(BEFORE_DISPATCH)に注意してください。
 
 入力エラーが起きると post_dispatch, diapatch は実行されずに、設定
 しているエラー用のテンプレートを出力します。
+
+post_dispatch_foo が存在するときは、diapatch_foo で入力チェックは行われません。
 
 未入力は明示的に NOT_xxx を設定していないと
 入力チェックが通ります。

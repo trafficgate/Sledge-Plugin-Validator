@@ -1,7 +1,7 @@
 package Sledge::Plugin::Validator::email_loose;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use Email::Valid::Loose;
 
@@ -64,7 +64,7 @@ EMAIL_LOOSE分の起動コストが気になるのであれば。
 ただし @ の前の . は許可します。
 
 このチェックは、標準では読み込まれません
-chekcメソッドで、EMAIL_LOOSE を設定しておくか、
+checkメソッドで、EMAIL_LOOSE を設定しておくか、
 load_function('email_loose') で チェック定義を読み込んでください。
 
 =back

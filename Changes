@@ -1,5 +1,15 @@
 Revision history for Perl extension Sledge::Plugin::Validator
 
+0.14 Mon Dec  5 10:08:22 2005
+	- post_dispatchが存在しているときは、dispatchでは何も動かさないようにした。
+	  http://d.hatena.ne.jp/tokuhirom/20051201/1133407764
+	  (Thanks to MATSUNO, tokuhiro)
+
+	- [Document Bug Fix] chekcメソッド -> checkメソッド
+	  Sledge::Plugin::Validator::email_strict 0.02
+	  Sledge::Plugin::Validator::email_loose 0.03
+	  (Thanks to MATSUNO, tokuhiro)
+
 0.13 Fri Nov 11 15:43:53 2005
 	- DECIMAL, UDECIMAL(符号付き、無しの小数点チェック)を追加した。
 	  INT の変わりにも使えます。
@@ -7,11 +17,11 @@ Revision history for Perl extension Sledge::Plugin::Validator
 	  (Thanks to FUSHIHARA, kan)
 
 0.12 Tue Aug 30 11:31:33 2005
-    - UINT(符号無しINT)を追加しました。
+	- UINT(符号無しINT)を追加しました。
 	  Sledge::Plugin::Validator::default 0.03
 
 0.11  Sun Apr 24 17:07:39 2005
-    - [Document Bug Fix] [% IF is.error %] -> [% valid.is_error %]
+	- [Document Bug Fix] [% IF is.error %] -> [% valid.is_error %]
 	  (Thanks to MATSUNO, tokuhiro)
 
 	- email_super_loose のテストスクリプトがmake testで動いてなかった
@@ -28,24 +38,24 @@ Revision history for Perl extension Sledge::Plugin::Validator
 	  携帯のメールアドレス、ウザー。
 
 0.09  Tue Feb 17 18:00:28 2004
-    - [Bug Fix] is_DATE の閏年のチェックが間違っていた。
+	- [Bug Fix] is_DATE の閏年のチェックが間違っていた。
 	   誤: 100 の倍数で 4で割れれば OK
 	   正: 100の倍数のときは400で割れる年､100の倍数でないときは4で割り切れる
 	   (Thanks to Hiroyuki Kobayashi)
 
 0.08  Tue Jul 15 17:05:39 2003
-    - [Bug Fix] mod_perl上でエラーが出る時がある、バグを修正。
-    * sub DESTROY {} を明示的に書いた。
+	- [Bug Fix] mod_perl上でエラーが出る時がある、バグを修正。
+	* sub DESTROY {} を明示的に書いた。
 
 0.07  Thu Jul 10 21:22:38 2003
-    - [Bug Fix] 詳細なエラー(is_error('q1', 'NOT_NULL'))をテンプレート
+	- [Bug Fix] 詳細なエラー(is_error('q1', 'NOT_NULL'))をテンプレート
 	  で定義していると、エラーがなくても is_error('q1') がエラーになる。
-    * エラーの判断を値が定義されているかだけではなく、KEYの数も見るようにした。
+	* エラーの判断を値が定義されているかだけではなく、KEYの数も見るようにした。
 	  (is_error)
 
-    - [Bug Fix] 実在しているキーを Alias に設定すると上手くAliasでの判断が
+	- [Bug Fix] 実在しているキーを Alias に設定すると上手くAliasでの判断が
 	  できなくなるバグを修正。
-    * Alias と実際のキーの判断の優先順位を逆転させた。(is_error)
+	* Alias と実際のキーの判断の優先順位を逆転させた。(is_error)
 
 0.06  Tue Jul  1 12:33:18 2003
 	- [new Valid Function] 自分で正規表現を書ける REGEX を追加。
@@ -64,7 +74,7 @@ Revision history for Perl extension Sledge::Plugin::Validator
 	  aliasをつかっているとエラーにならない。
 
 	- [Document Bug Fix] スペース、全角スペースは基本的にエラーとなる。
-    - [Document Bug Fix] FROM -> FORM (Thanks to Hiroshi Sakuramoto)
+	- [Document Bug Fix] FROM -> FORM (Thanks to Hiroshi Sakuramoto)
 
 0.05  Fri May 16 11:56:56 2003
 	- ドキュメントの整備。

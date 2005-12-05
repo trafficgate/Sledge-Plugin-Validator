@@ -1,7 +1,7 @@
 package Sledge::Plugin::Validator::email_strict;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use Email::Valid;
 
@@ -62,7 +62,7 @@ EMAIL_STRICT分の起動コストが気になるのであれば。
 ドメインが、MXレコードに設定されていること。
 
 このチェックは、標準では読み込まれません
-chekcメソッドで、EMAIL を設定しておくか、
+checkメソッドで、EMAIL を設定しておくか、
 load_function('email') で チェック定義を読み込んでください。
 
 =back
