@@ -1,8 +1,14 @@
 Revision history for Perl extension Sledge::Plugin::Validator
 
+0.15 Tue Dec 13 14:40:33 2005
+	- エラーメッセージの自動生成機能をつけた。
+	  Sledge::Plugin::Validator 0.15
+	  (Thanks to MATSUNO, tokuhiro)
+
 0.14 Mon Dec  5 10:08:22 2005
 	- post_dispatchが存在しているときは、dispatchでは何も動かさないようにした。
 	  http://d.hatena.ne.jp/tokuhirom/20051201/1133407764
+	  Sledge::Plugin::Validator 0.14
 	  (Thanks to MATSUNO, tokuhiro)
 
 	- [Document Bug Fix] chekcメソッド -> checkメソッド

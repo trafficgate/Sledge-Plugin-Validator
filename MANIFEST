@@ -1,4 +1,5 @@
 Changes
+eg/message.yaml
 lib/Sledge/Plugin/Validator.pm
 lib/Sledge/Plugin/Validator/date.pm
 lib/Sledge/Plugin/Validator/default.pm
@@ -21,7 +22,10 @@ t/05_email_strict.t
 t/06_date.t
 t/07_email_super_loose.t
 t/08_http_url.t
+t/09_post_dispatch.t
+t/10_messages.t
 t/foo.html
 t/foo_error.html
 t/lib/Mock/Valid/foo.pm
 t/lib/Sledge/TestPages.pm
+t/message.html

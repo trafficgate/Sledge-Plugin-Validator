@@ -1,0 +1,11 @@
+ERROR
+[% IF valid.is_error %]
+<div class="error">
+    <ul>
+        <li>入力項目が正しくありません</li>
+        [% FOR error IN valid.get_error_messages %]
+            <li>[% error | html %]</li>
+        [% END %]
+    </ul>
+</div>
+[% END %]

@@ -1,0 +1,28 @@
+message:
+  login_id.regex   : %sには英小文字または数字しか使えません
+
+param:
+  email            : Eメールアドレス
+  email_mobile     : ケータイメールアドレス
+  login_id         : ログインID
+  login_pw         : パスワード
+  name             : 名前
+  name_kana        : ふりがな
+  sex              : 性別
+  job              : 職業
+  birthday         : 生年月日
+  title            : タイトル
+  status           : 状態
+  description      : 概要
+  tags             : タグ
+
+function:
+  cdbi_unique      : その%sは既に登録されています
+  not_null         : %sを入力してください
+  duplication      : %sは同じものを二回入力してください
+  email            : %sがEメールアドレスとして正しくありません
+  date             : %sが日付として正しくありません
+  not_sp           : %sは半角スペースを含むことができません
+  int              : %sは整数で入力してください
+  uint             : %sは正の整数で入力してください
+  regex            : %sが正しくありません

@@ -2,11 +2,16 @@ package Sledge::Plugin::Validator;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.14';
+$VERSION = '0.15';
 
 use Carp;
 use vars qw($AUTOLOAD);
+use base qw(Class::Accessor);
+
 use UNIVERSAL::require;
+use YAML qw();
+
+__PACKAGE__->mk_accessors(qw(messages));
 
 sub import {
 
@@ -30,10 +35,11 @@ sub import {
 			}
 
 			#
-			# チェック定義メソッドを呼ぶ
+			# チェック定義
 			#
 			$self->{valid} = Sledge::Plugin::Validator->new(
 				LOAD_FUNCTION => [qw(default japanese)],
+				MESSAGE_FILE  => eval {$self->create_config->validator_message_file},
 			);
 
 			$self->$vali_page();
@@ -120,6 +126,10 @@ sub new {
 	
 	if (defined $option{LOAD_FUNCTION}) {
 		$self->load_function($_) for (@{$option{LOAD_FUNCTION}});
+	}
+
+	if (defined $option{MESSAGE_FILE}) {
+		$self->load_messages($option{MESSAGE_FILE});
 	}
 
 	return $self;
@@ -268,6 +278,82 @@ sub is_error {
 }
 
 # -------------------------------------------------------------------------
+# エラーメッセージの生成
+#
+# -------------------------------------------------------------------------
+sub get_error_messages {
+	my $self = shift;
+
+	die "Please set the message file" unless $self->messages;
+
+	# エイリアスをパラメータをキーにしたハッシュにする
+	my %alias;
+	while (my ($alias, $params) = each %{$self->{ALIAS}}) {
+		for my $param (@{$params}) {
+			$alias{$param} = $alias;
+		}
+	}
+
+	my %log_for; # 同じの二回出さないために記録しておく
+	my @messages;
+	while (my ($param, $result) = each %{$self->{ERROR}}) {
+		# エイリアス効いてたら、そっち使う
+		if (defined $alias{$param}) {
+			$param = $alias{$param};
+		}
+
+		for my $func (keys %{$result}) {
+			next if exists $log_for{"$param.$func"}; # すでに出てる
+			push @messages, $self->get_error_message($param, $func);
+			$log_for{"$param.$func"} = 1;
+		}
+	}
+
+	return @messages;
+}
+
+# -------------------------------------------------------------------------
+# エラーメッセージの取得
+# Usage: $self->valid->get_error_message('email', 'NOT_NULL');
+# 
+# -------------------------------------------------------------------------
+sub get_error_message {
+	my $self     = shift;
+	my $param    = shift;
+	my $function = lc(shift);
+
+	my $err_message  = $self->messages->{message}->{"$param.$function"};
+	my $err_param    = $self->messages->{param}->{$param};
+	my $err_function = $self->messages->{function}->{$function};
+
+	if ($err_message) {
+		return sprintf($err_message, $err_param);
+	}
+	elsif ($err_function and $err_param) {
+		return sprintf($err_function, $err_param);
+	}
+	else {
+		die  "$param.$function is not defined in message file.";
+	}
+}
+
+# -------------------------------------------------------------------------
+# プロパティファイルを設定する
+#
+# -------------------------------------------------------------------------
+sub load_messages {
+	my $self = shift;
+	my $path = shift;
+
+	my $yaml = YAML::LoadFile($path);
+	$yaml->{message}  ||= {};
+	$yaml->{param}    ||= {};
+	$yaml->{function} ||= {};
+
+	$self->messages($yaml);
+}
+
+# -------------------------------------------------------------------------
 # $valid->is_FUNCTION で読み込まれているチェックを読むことができる
 #
 # -------------------------------------------------------------------------
@@ -387,6 +473,15 @@ Sledge::Plugin::Validator - FORM から入力されたパラメータチェック。
   </ul>
   [% END %]
 
+  # Ver.0.15よりエラーメッセージを自動で生成出来るようになりました。
+  # YAMLでエラーメッセージを設定(eg/message.yaml)
+  # テンプレート側は以下のように設定。
+  <ul>
+  [% FOR error IN valid.get_error_messages %]
+      <li>[% error | html %]</li>
+  [% END %]
+  </ul>
+
 =head1 DESCRIPTION
 
 Sledge::Plugin::Validator  FORM から入力されたパラメータチェックする
@@ -502,12 +597,38 @@ is_error メソッドで zip もエラーになります。
 
 =over 4
 
-=item エラーメッセージの自動生成
+=item 自動で表示するエラーメッセージをの順番を気にししたい。
 
-エラーメッセージを生成するのがめんどくさいので、ある程度は自動的に
-生成されるようにしたい。
+$self->r->param() つかう?
 
-どうするのが、便利かつ綺麗かなぁ？アイディア募集中。
+=item デフォルトの Message をが欲しい。
+
+デフォルトのメッセージの設定が欲しい。プロジェクト毎に message.yaml をコピーするのはどうなの?
+message.yaml は複数ファイル読み込めるようにすると良いのかも。
+
+=item JavaScriptとの連動したい!
+
+L<http://blog.kan.vc/1134288746.html>,
+L<http://blog.kan.vc/1133994513.html>
+
+=item Sledge::Validator 欲しい!
+
+L<http://d.hatena.ne.jp/tokuhirom/searchdiary?word=Validator&type=detail>
+
+ここら辺を参考に。
+もろもろ直す。
+
+=over 4
+
+=item Sledgeに依存しないで、単体でも使えるとイイかもね。
+
+=item Plugin::Regularizeと連動。(キモイけど)
+
+=item dispatchをキャンセルしないのでAFTER_DISPATCH動くよ!
+
+=item Project::Validator ってのを作るようになるよ。(めんどい?/Plugin::Validatorっぽく動いてもイイかも)
+
+=back
 
 =back
 
@@ -519,7 +640,7 @@ is_error メソッドで zip もエラーになります。
 
 =head1 AUTHOR
 
-KIMURA, takefumi E<lt>takefumi@takefumi.comE<gt>
+KIMURA, takefumi E<lt>takefumi@mobilefactory.jpE<gt>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

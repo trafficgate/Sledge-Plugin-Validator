@@ -77,7 +77,7 @@ SYNOPSIS
       # テンプレートでは以下のようにエラーの項目によって適宜メッセージを
       # 生成してください。
       #
-      [% IF is.error %]
+      [% IF valid.is_error %]
       入力エラーです。
       <ul>
           [% IF valid.is_error('login_id') %]
@@ -94,6 +94,15 @@ SYNOPSIS
       </ul>
       [% END %]
 
+      # Ver.0.15よりエラーメッセージを自動で生成出来るようになりました。
+      # YAMLでエラーメッセージを設定(eg/message.yaml)
+      # テンプレート側は以下のように設定。
+      <ul>
+      [% FOR error IN valid.get_error_messages %]
+          <li>[% error | html %]</li>
+      [% END %]
+      </ul>
+
 DESCRIPTION
     Sledge::Plugin::Validator FORM から入力されたパラメータチェックする
     プラグインです。
@@ -103,6 +112,9 @@ DESCRIPTION
 
     入力エラーが起きると post_dispatch, diapatch は実行されずに、設定
     しているエラー用のテンプレートを出力します。
+
+    post_dispatch_foo が存在するときは、diapatch_foo
+    で入力チェックは行われません。
 
     未入力は明示的に NOT_xxx を設定していないと 入力チェックが通ります。
 
@@ -186,20 +198,35 @@ METHOD
         この仕組みは、実験的に導入されています。
 
 TODO
-    エラーメッセージの自動生成
-        エラーメッセージを生成するのがめんどくさいので、ある程度は自動的に
-        生成されるようにしたい。
+    自動で表示するエラーメッセージをの順番を気にししたい。
+        $self->r->param() つかう?
 
-        どうするのが、便利かつ綺麗かなぁ？アイディア募集中。
+    デフォルトの Message をが欲しい。
+        デフォルトのメッセージの設定が欲しい。プロジェクト毎に message.yaml
+        をコピーするのはどうなの? message.yaml
+        は複数ファイル読み込めるようにすると良いのかも。
+
+    JavaScriptとの連動したい!
+        <http://blog.kan.vc/1134288746.html>,
+        <http://blog.kan.vc/1133994513.html>
+
+    Sledge::Validator 欲しい!
+        <http://d.hatena.ne.jp/tokuhirom/searchdiary?word=Validator&type=detail>
+
+        ここら辺を参考に。 もろもろ直す。
+
+        Sledgeに依存しないで、単体でも使えるとイイかもね。
+        Plugin::Regularizeと連動。(キモイけど)
+        dispatchをキャンセルしないのでAFTER_DISPATCH動くよ!
+        Project::Validator
+        ってのを作るようになるよ。(めんどい?/Plugin::Validatorっぽく動いても
+        イイかも)
 
 BUGS
-    何かバグや要望がありましたら、BTSに書きこむかメールで
-    お問い合わせください。
-
-    <http://www.godtomato.net/works/bts/>
+    何かバグや要望がありましたら、メールでお問い合わせ ください。
 
 AUTHOR
-    KIMURA, takefumi <takefumi@takefumi.com>
+    KIMURA, takefumi <takefumi@mobilefactory.jp>
 
     This library is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.
@@ -207,6 +234,7 @@ AUTHOR
 SEE ALSO
     Sledge::Plugin::Validator::date, Sledge::Plugin::Validator::default,
     Sledge::Plugin::Validator::email,
+    Sledge::Plugin::Validator::email_super_loose,
     Sledge::Plugin::Validator::email_loose,
     Sledge::Plugin::Validator::email_strict,
     Sledge::Plugin::Validator::japanese
