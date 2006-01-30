@@ -1,13 +1,14 @@
 package Sledge::Plugin::Validator::date;
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 sub load {
 	my $self = shift;
 
 	$self->set_function(
-		DATE => \&is_DATE,
+		DATE        => \&is_DATE,
+		DATE_HYPHEN => \&is_DATE_HYPHEN,
 	);
 }
 
@@ -28,6 +29,10 @@ sub is_DATE {
 	}
 
 	return 1;
+}
+
+sub is_DATE_HYPHEN {
+    return split /-/, shift;
 }
 
 1;
