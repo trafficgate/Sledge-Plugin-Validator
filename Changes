@@ -1,5 +1,13 @@
 Revision history for Perl extension Sledge::Plugin::Validator
 
+0.16 Mon Jan 30 11:09:27 2006
+	- チェック定義が行っていないときに、定義の一覧を取ろうとするとエラーになるバグ修正。
+	  Sledge::Plugin::Validator 0.16
+	  (Thanks to MATSUNO, tokuhiro)
+	- YYYY-MM-DD のような - 区切りの日付の入力チェックを出来るようにした。
+	  Sledge::Plugin::Validator::date 0.04
+	  (Thanks to MATSUNO, tokuhiro)
+
 0.15 Tue Dec 13 14:40:33 2005
 	- エラーメッセージの自動生成機能をつけた。
 	  Sledge::Plugin::Validator 0.15
