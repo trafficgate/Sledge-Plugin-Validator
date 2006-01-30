@@ -2,7 +2,7 @@ package Sledge::Plugin::Validator;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 use Carp;
 use vars qw($AUTOLOAD);
@@ -147,7 +147,8 @@ sub check {
 		return keys %{$self->{PLAN}};
 	}
 	elsif (@_ == 1) {
-		return @{$self->{PLAN}->{$_[0]}};
+		my $plan = $self->{PLAN}->{$_[0]};
+		return $plan ? @$plan : ();
 	}
 	else {
 		$self->_check_set(@_);
